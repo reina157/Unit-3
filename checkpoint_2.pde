@@ -31,7 +31,7 @@ void draw() {
 
 
   void mouseReleased() {
-  if (mouseX> 100 && mouseX < 300 && mouseY > 400 && mouseY <200); {
+  if (mouseX> 100 && mouseX < 300 && mouseY > 400 && mouseY <500) {
     toggle = toggle * -1;
   }
 }
