@@ -1,4 +1,4 @@
-//april 8
+//april 16
 
 //Variables for color selection
 color selectedColor;
@@ -25,16 +25,16 @@ void setup() {
   sliderX = 267;
   cow = loadImage("Cow.png");
   cowOn= false;
-  thickness=1;
+  thickness=4;
 }
 
 void draw() {
 
   thickness= map(sliderX, 235, 370, 1, 20);
 
-  strokeWeight(4);
 
   // toolbar
+    strokeWeight(4);
   fill(grey);
   stroke(darkbrown);
   rect(0, 0, 800, 150);
@@ -42,14 +42,19 @@ void draw() {
   //indicator
   fill(selectedColor);
   rect(400, 20, 30, 50);
-
+  
+  //strokweight indicator
+  fill(0);
+  strokeWeight(2);
+  rect(360,100,50,thickness);
+  
   //stamp
   tactile(260, 70, 80, 70);
   cowOnOff();
   fill(255);
   rect(260, 70, 80, 70);
   image(cow, 265, 75, 70, 70);
-
+  
   //slider
   tactile(267, 40, 15);
   line(235, 40, 370, 40);
@@ -128,24 +133,24 @@ void tactile (int x, int y, int r) {
     stroke(white);
   } else {
     stroke(darkbrown);
-  }
 }
-
+}
 
 
 
 
 //////
 void mouseDragged() { ///////draw line
-  controlSlider(); ///moving slider
- if (mouseY>150 && cowOn == false) {
+ controlSlider(); ///moving slider
+if(mouseY>140){
+ if (cowOn == false) {
     strokeWeight(thickness);
-    line(pmouseX, pmouseY, mouseX, mouseY);
+    line(pmouseX,pmouseY, mouseX, mouseY);
   } else {
     image(cow, mouseX, mouseY, thickness*10, thickness*10);
-  } 
+  }
 }
-
+}
 
 
 
@@ -184,6 +189,7 @@ void mouseReleased() {
   ///cow on and off
   if (mouseX >260 && mouseX < 340 && mouseY >70 && mouseY <140) {
     cowOn= !cowOn;
+    
   }
 
   //new background
@@ -193,20 +199,21 @@ void mouseReleased() {
  
   //save button
   if(mouseX> 560 && mouseX<640 && mouseY>50 && mouseY<100) {
-    selectOutput("Choose a name for new image fil", "saveImage");
+    selectOutput("Choose a name for new image file", "saveImage");
   }
   
   // Load button
   if(mouseX>660 && mouseX< 740 && mouseY>50 && mouseY<100) {
     selectInput("Pick an image to load","openImage");
   }
+  
 }
 
 ///////
 
 void saveImage(File f) {
-  if(f!=null) {
-    PImage canvas = get (150,600,800,600);
+  if(f != null) {
+    PImage canvas = get (0,150,800,450);
     canvas.save(f.getAbsolutePath());
   }
 }
@@ -219,15 +226,16 @@ void openImage(File f) {
     int n=0;
     while (n<10) {
       PImage pic = loadImage(f.getPath());
-      image(pic,0,0);
+      image(pic,0,150);
       n=n+1;
     }
   }
 }
 
+
 ///////
 void tactile (int x, int y, int w, int h) {
-  if (mouseX > x && mouseX< x*w && mouseY > y && mouseY <y*h) {
+  if (mouseX > x && mouseX< x+w && mouseY > y && mouseY <y+h) {
     stroke(white);
   } else {
     stroke(darkbrown);
@@ -242,7 +250,7 @@ void tactile (int x, int y, int w, int h) {
 
 void cowOnOff() {
   if (cowOn == true) {
-    stroke(white);
+    stroke(255,0,0);
     strokeWeight(5);
   } else {
     stroke(darkbrown);
